@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "datalens"
+version = "0.1.0"
+description = "A small CSV data-quality analyzer"
+requires-python = ">=3.11"
+dependencies = [
+    "jinja2>=3.1",
+]
+
+[project.scripts]
+datalens = "datalens.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=7.0"]

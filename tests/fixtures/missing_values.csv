@@ -1,0 +1,7 @@
+name,age,salary,department,active
+Alice,30,,Engineering,true
+Bob,,45000,Marketing,
+Charlie,35,60000,,true
+Diana,28,52000,Sales,
+Eve,32,,Engineering,false
+Frank,40,70000,,true

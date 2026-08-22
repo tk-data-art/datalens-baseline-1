@@ -1,0 +1,7 @@
+name,age,salary,rating,active
+Alice,30,50000,4.5,true
+Bob,25,45000,3.8,true
+Charlie,35,60000,,true
+Diana,28,52000,4.2,false
+Eve,thirty-two,55000,4.0,true
+Frank,40,70000,not_a_number,true
