@@ -96,6 +96,30 @@
 
 ---
 
+## ADR-007: report.py receives profiles, result, row_count, and duplicate_row_count as explicit parameters
+
+**Date:** 2026-08-22
+**Status:** Accepted
+
+**Context:** report.py needs to display row count, column count, duplicate-row count, and per-column profiling data (types, missing values, unique counts, numeric statistics) — none of which are present in the QualityResult dict from T03. The original T04 spec used `generate(result, output_path)` which cannot populate all required report sections.
+
+**Decision:** report.py receives four explicit parameters: `profiles` (list[dict] from profiler), `result` (dict from quality), `row_count` (int from loader), and `duplicate_row_count` (int, computed by cli.py).
+
+**Consequences:**
+- report.py is a pure renderer — it does not parse CSV, profile data, compute scores, or detect duplicates
+- Upstream T01–T03 contracts remain unchanged — loader.py, profiler.py, and quality.py output formats are not modified
+- row_count remains an explicit parameter rather than embedded in QualityResult — T03 contract stays clean
+- duplicate_row_count is computed by cli.py (which has access to raw rows) and passed as input — no duplicate detection logic in report.py
+- report.py API: `generate(profiles, result, row_count, duplicate_row_count, output_path) -> None`
+- jinja2 Environment(autoescape=True) is used for security against CSV-derived HTML injection
+
+**Alternatives considered:**
+- Expanding QualityResult to include row_count and duplicate_row_count — rejected because it would modify the T03-approved output contract
+- Computing all metrics in cli.py and embedding them in a flat dict — rejected because profiles already contain the data in structured form; wrapping it adds unnecessary indirection
+- Computing duplicate rows in profiler.py — rejected because it would change the T02 module contract and profiler's responsibility is per-column statistics, not row-level comparison
+
+---
+
 ## ADR-006: Testing integrated per task, not batched at end
 
 **Date:** 2026-08-22

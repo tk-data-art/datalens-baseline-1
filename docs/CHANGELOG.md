@@ -4,6 +4,21 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ---
 
+## [0.5.0] — 2026-08-22
+
+### feat(T04): HTML report generator
+
+- Implemented `src/datalens/report.py` with `generate(profiles, result, row_count, duplicate_row_count, output_path)` public function
+- Uses jinja2 `Environment(autoescape=True)` with inline template string — all CSV-derived values are auto-escaped
+- Minimal inline CSS only — no JavaScript, no frameworks, no external assets
+- Report contains all 10 required sections: row count, column count, duplicate-row count, data types, missing values, unique values, numeric statistics, quality score, per-column score breakdown
+- report.py is a pure renderer — does not parse CSV, profile data, compute scores, or detect duplicates
+- ADR-007 documents the input contract expansion — upstream T01–T03 contracts unchanged
+- Added `tests/test_report.py` with 5 unit tests (all pass on first run)
+- **Git checkpoint:** `feat(T04): HTML report generator`
+
+---
+
 ## [0.4.0] — 2026-08-22
 
 ### feat(T03): quality score module

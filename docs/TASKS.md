@@ -11,16 +11,16 @@
 | T00 | Project Operating System | Complete | 110 min | ~15 min | N/A | NONE | `77ad371` |
 | T01 | loader.py — CSV reading and parsing | Complete (corrective) | 35 min | ~25 min | 7/7 pass | NONE | `f28a620` + corrective |
 | T02 | profiler.py — per-column profiling | Complete | 40 min | ~15 min | 5/5 pass | NONE | `d7915a4`, `2fc77f2` |
-| T03 | quality.py — composite quality score | Complete | 30 min | — | — | — | `{pending}` |
-| T04 | report.py — HTML report generation | Pending | 40 min | — | — | — | — |
+| T03 | quality.py — composite quality score | Complete | 30 min | ~20 min | 9/9 pass | NONE | `b23442c` |
+| T04 | report.py — HTML report generation | Complete | 40 min | — | — | — | `{pending}` |
 | T05 | cli.py — CLI entry point | Pending | 30 min | — | — | — | — |
 | T06 | Final review and polish | Pending | 25 min | — | — | — | — |
 
-**Overall completion:** 4/7 tasks complete (57%) | Implementation in progress
+**Overall completion:** 5/7 tasks complete (71%) | Implementation in progress
 
-**Completed tasks:** T00, T01, T02, T03
+**Completed tasks:** T00, T01, T02, T03, T04
 
-**Current task:** None (awaiting human approval to begin T04)
+**Current task:** None (awaiting human approval to begin T05)
 
 **Remaining tasks:** T01, T02, T03, T04, T05, T06
 
@@ -207,22 +207,61 @@ composite_score =
 
 ## T04 — report.py: HTML Report Generation
 
-**Objective:** Implement `report.py` to generate a self-contained HTML report from quality results.
+**Objective:** Implement `report.py` to generate a self-contained HTML report from profiling and scoring data.
 
 **Dependencies:** T03 complete
 
+**API contract:**
+```python
+def generate(
+    profiles: list[dict],
+    result: dict,
+    row_count: int,
+    duplicate_row_count: int,
+    output_path: str,
+) -> None
+```
+
+**Data ownership:** report.py is a renderer only. It does not parse CSV, profile data, compute quality scores, or detect duplicates. `row_count` comes from loader, `duplicate_row_count` will be computed by cli.py.
+
+**Templating:** jinja2 `Environment(autoescape=True)` with an inline template string. No separate template file. All CSV-derived values are auto-escaped.
+
+**Styling:** Minimal inline CSS — readable typography, section headings, table borders, padding, readable score display. No JavaScript, no responsive frameworks, no themes, no progress bars, no animations, no external CSS, no external assets.
+
+**Quality score display:** "Quality Score: X / 100" with a compact per-column score breakdown within the same section.
+
+**Required report sections/content:**
+1. Row count
+2. Column count
+3. Duplicate-row count
+4. Detected type per column (data types table)
+5. Missing count and percentage per column (missing-value table)
+6. Unique/distinct count per column
+7. Numeric statistics (min, max, mean, median, std) — numeric columns only
+8. Composite quality score (0–100)
+9. Compact per-column score breakdown
+10. Self-contained valid HTML
+
+**Edge cases:**
+- `edge_empty.csv` has 0 data rows + header columns — report should show row_count=0, column_count=N (number of headers), empty data tables, score=0.0
+- Direct 0-row/0-column input (if passed in tests): report with zeros across all metrics
+- CSV-derived values with HTML-special characters (`<`, `>`, `&`, `"`) must be escaped
+
+**Long values:** No custom truncation. Normal browser/CSS text wrapping.
+
 **Acceptance criteria:**
-- [ ] `report.py` has a public function `generate(result, output_path)` that writes an HTML file
-- [ ] Output file exists at the specified path after the function returns
-- [ ] HTML contains all 9 required sections: row count, column count, data types table, missing-value table with percentages, duplicate-row count, unique-value counts, numeric statistics table, quality score display
-- [ ] HTML is readable in a browser (valid HTML structure)
-- [ ] All 3 `test_report.py` tests pass
+- [x] `report.py` has a public function `generate(profiles, result, row_count, duplicate_row_count, output_path)` that writes an HTML file
+- [x] Output file exists at the specified path after the function returns
+- [x] HTML contains all required sections: row count, column count, duplicate-row count, data types table, missing-value table with percentages, unique-value counts, numeric statistics, quality score display, per-column score breakdown
+- [x] HTML is valid and readable in a browser (DOCTYPE, proper HTML structure, inline CSS)
+- [x] HTML-escapes CSV-derived values (test with `<`, `>`, `&`, `"` characters)
+- [x] All 5 `test_report.py` tests pass
 
 **Estimated time:** 40 minutes
 
 **Definition of Done:**
 1. All acceptance criteria met
-2. `test_report.py` passes (3 tests)
+2. `test_report.py` passes (5 tests)
 3. `docs/TASKS.md` updated (T04 marked complete)
 4. `docs/CHANGELOG.md` entry written
 5. Git checkpoint: `feat(T04): HTML report generator`

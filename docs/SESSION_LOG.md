@@ -139,3 +139,25 @@ Each session entry records:
 
 **Next session:** Awaiting human approval to begin T04.
 
+---
+
+## Session 04 — report.py Implementation (T04)
+
+**Date:** 2026-08-22
+**Baseline:** Baseline 1 (vanilla Claude Code)
+
+**Focus:** Implement `report.py` — HTML report generation module. Pre-flight identified 5 ambiguities requiring human decisions. All approved. ADR-007 written documenting the expanded input contract. report.py is a pure renderer — receives profiles, result, row_count, duplicate_row_count; does not parse CSV, profile data, compute scores, or detect duplicates. jinja2 Environment(autoescape=True) with inline template for security. Minimal inline CSS — no JavaScript, no frameworks, no external assets.
+
+**Completed:**
+- T04 — report.py (HTML report generation)
+
+**Pending:**
+- T05 — cli.py
+- T06 — Final review
+
+**Decisions:** ADR-007 written — report.py input contract expansion. Upstream T01–T03 contracts unchanged.
+
+**Drift incidents:** None. Implementation stayed within acceptance criteria.
+
+**Next session:** Awaiting human approval to begin T05.
+
