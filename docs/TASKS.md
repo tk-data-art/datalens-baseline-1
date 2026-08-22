@@ -9,7 +9,7 @@
 | ID | Title | Status | Est. | Actual | Tests | Context Drift | Git Commit |
 |---|---|---|---|---|---|---|---|
 | T00 | Project Operating System | Complete | 110 min | ~15 min | N/A | NONE | `77ad371` |
-| T01 | loader.py — CSV reading and parsing | Complete | 35 min | ~15 min | 4/4 pass | NONE | `{pending}` |
+| T01 | loader.py — CSV reading and parsing | Complete (corrective) | 35 min | ~25 min | 7/7 pass | NONE | `f28a620` + corrective |
 | T02 | profiler.py — per-column profiling | Pending | 40 min | — | — | — | — |
 | T03 | quality.py — composite quality score | Pending | 30 min | — | — | — | — |
 | T04 | report.py — HTML report generation | Pending | 40 min | — | — | — | — |
@@ -94,11 +94,11 @@
 
 **Definition of Done:**
 1. All acceptance criteria met
-2. `test_loader.py` passes (4 tests)
+2. `test_loader.py` passes (7 tests after corrective pass)
 3. `docs/TASKS.md` updated (T01 marked complete)
-4. `docs/SESSION_LOG.md` updated if session boundary crossed
+4. `docs/SESSION_LOG.md` updated
 5. `docs/CHANGELOG.md` entry written
-6. Git checkpoint: `feat(T01): CSV loader module`
+6. Git checkpoint: `feat(T01): CSV loader module` (original) + `fix(T01): add explicit quoted-comma fixture and expand test coverage` (corrective)
 
 ---
 

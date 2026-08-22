@@ -69,15 +69,15 @@ Each session entry records:
 
 ---
 
-## Session 01 — loader.py Implementation (T01)
+## Session 01 — loader.py Implementation (T01, corrective pass)
 
 **Date:** 2026-08-22
 **Baseline:** Baseline 1 (vanilla Claude Code)
 
-**Focus:** Implement `loader.py` — CSV reading and parsing module.
+**Focus:** Implement `loader.py` — CSV reading and parsing module. Initial implementation had verification inconsistencies; corrective pass added explicit quoted-comma fixture and expanded test coverage to cover all 6 fixtures.
 
 **Completed:**
-- T01 — loader.py (CSV reading and parsing)
+- T01 — loader.py (CSV reading and parsing) — corrective pass complete
 
 **Pending:**
 - T02 — profiler.py
@@ -88,7 +88,7 @@ Each session entry records:
 
 **Decisions:** None new (no architecture changes needed).
 
-**Drift incidents:** None. Implementation stayed within acceptance criteria.
+**Drift incidents:** None (application scope). Repository/environment changes in original commit: pyproject.toml build backend fix, .gitignore creation. These are hygiene items, not scope drift.
 
 **Next session:** Awaiting human approval to begin T02.
 

@@ -4,6 +4,17 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ---
 
+## [0.2.1] — 2026-08-22
+
+### fix(T01): add explicit quoted-comma fixture and expand test coverage
+
+- Added `tests/fixtures/quoted_commas.csv` — fixture with quoted fields containing embedded commas
+- Expanded `tests/test_loader.py` from 4 to 7 tests, covering all 6 fixtures explicitly
+- Corrected TASK_COMPLETION.md with verified context drift classification and reconciled git statistics
+- **Git checkpoint:** `fix(T01): add explicit quoted-comma fixture and expand test coverage`
+
+---
+
 ## [0.2.0] — 2026-08-22
 
 ### feat(T01): CSV loader module
@@ -12,8 +23,8 @@ All changes are recorded with their git commit hash after each checkpoint.
 - Returns `(rows: list[dict], column_names: list[str], row_count: int)`
 - Handles missing file (raises `FileNotFoundError`), empty CSV, quoted fields
 - Added `tests/test_loader.py` with 4 unit tests (all pass on first run)
-- Fixed `pyproject.toml` build backend (`setuptools.backends.legacy` → `setuptools.build_meta`)
-- Created `.gitignore` to exclude pip artifacts
+- Fixed `pyproject.toml` build backend (`setuptools.backends.legacy` → `setuptools.build_meta`) — environment correction
+- Created `.gitignore` to exclude pip artifacts — repository hygiene
 - **Git checkpoint:** `feat(T01): CSV loader module`
 
 ---

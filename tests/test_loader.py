@@ -16,16 +16,37 @@ def test_load_clean_simple():
     assert len(rows) == 5
     assert rows[0]["name"] == "Alice"
     assert rows[0]["age"] == "30"
+    assert rows[4]["active"] == "false"
 
 
-def test_quoted_fields_with_commas():
-    # Verify the parser handles quoted fields — use clean_simple which
-    # has no embedded commas, but confirm the file parses without error
-    # and field count is correct. A fixture with embedded commas would
-    # be added if the project requires explicit quoted-comma coverage.
+def test_load_missing_values():
     rows, columns, row_count = load_csv(str(FIXTURES_DIR / "missing_values.csv"))
     assert row_count == 6
     assert columns == ["name", "age", "salary", "department", "active"]
+    assert rows[0]["salary"] == ""  # empty field
+
+
+def test_load_mixed_types():
+    rows, columns, row_count = load_csv(str(FIXTURES_DIR / "mixed_types.csv"))
+    assert row_count == 6
+    assert columns == ["name", "age", "salary", "rating", "active"]
+    assert rows[4]["age"] == "thirty-two"  # string where numeric expected
+
+
+def test_load_duplicates():
+    rows, columns, row_count = load_csv(str(FIXTURES_DIR / "duplicates.csv"))
+    assert row_count == 6
+    assert columns == ["name", "age", "city"]
+    assert rows[0] == rows[2]  # Alice appears twice
+
+
+def test_quoted_fields_with_embedded_commas():
+    rows, columns, row_count = load_csv(str(FIXTURES_DIR / "quoted_commas.csv"))
+    assert row_count == 4
+    assert columns == ["name", "description", "location"]
+    assert rows[0]["description"] == "Software Engineer, Senior"
+    assert rows[2]["description"] == "Product Manager"
+    assert rows[2]["location"] == "San Francisco, CA"
 
 
 def test_empty_csv():
