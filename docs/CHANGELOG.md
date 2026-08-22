@@ -4,14 +4,17 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ---
 
-## [0.1.1] — 2026-08-22
+## [0.2.0] — 2026-08-22
 
-### chore(T00): add task completion reporting protocol and progress tracker
+### feat(T01): CSV loader module
 
-- Created `docs/TASK_COMPLETION.md` — standard audit template for all completed tasks (T01–T06)
-- Updated `docs/TASKS.md` — added live progress tracker with status, estimated/actual time, test results, context drift, and Git commit columns
-- Updated `CLAUDE.md` — added mandatory task completion reporting protocol requiring structured reports after every task and human approval before proceeding
-- **Git checkpoint:** `chore(T00): add task completion reporting protocol and progress tracker`
+- Implemented `src/datalens/loader.py` with `load_csv(path)` public function
+- Returns `(rows: list[dict], column_names: list[str], row_count: int)`
+- Handles missing file (raises `FileNotFoundError`), empty CSV, quoted fields
+- Added `tests/test_loader.py` with 4 unit tests (all pass on first run)
+- Fixed `pyproject.toml` build backend (`setuptools.backends.legacy` → `setuptools.build_meta`)
+- Created `.gitignore` to exclude pip artifacts
+- **Git checkpoint:** `feat(T01): CSV loader module`
 
 ---
 

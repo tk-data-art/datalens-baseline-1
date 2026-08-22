@@ -9,18 +9,18 @@
 | ID | Title | Status | Est. | Actual | Tests | Context Drift | Git Commit |
 |---|---|---|---|---|---|---|---|
 | T00 | Project Operating System | Complete | 110 min | ~15 min | N/A | NONE | `77ad371` |
-| T01 | loader.py — CSV reading and parsing | Pending | 35 min | — | — | — | — |
+| T01 | loader.py — CSV reading and parsing | Complete | 35 min | ~15 min | 4/4 pass | NONE | `{pending}` |
 | T02 | profiler.py — per-column profiling | Pending | 40 min | — | — | — | — |
 | T03 | quality.py — composite quality score | Pending | 30 min | — | — | — | — |
 | T04 | report.py — HTML report generation | Pending | 40 min | — | — | — | — |
 | T05 | cli.py — CLI entry point | Pending | 30 min | — | — | — | — |
 | T06 | Final review and polish | Pending | 25 min | — | — | — | — |
 
-**Overall completion:** 1/7 tasks complete (14%) | Setup phase complete, implementation phase pending
+**Overall completion:** 2/7 tasks complete (28%) | Implementation started
 
-**Completed tasks:** T00
+**Completed tasks:** T00, T01
 
-**Current task:** None (awaiting human approval to begin T01)
+**Current task:** None (awaiting human approval to begin T02)
 
 **Remaining tasks:** T01, T02, T03, T04, T05, T06
 

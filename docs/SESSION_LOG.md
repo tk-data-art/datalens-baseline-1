@@ -67,3 +67,28 @@ Each session entry records:
 
 **Next session:** Awaiting human approval to begin T01.
 
+---
+
+## Session 01 — loader.py Implementation (T01)
+
+**Date:** 2026-08-22
+**Baseline:** Baseline 1 (vanilla Claude Code)
+
+**Focus:** Implement `loader.py` — CSV reading and parsing module.
+
+**Completed:**
+- T01 — loader.py (CSV reading and parsing)
+
+**Pending:**
+- T02 — profiler.py
+- T03 — quality.py
+- T04 — report.py
+- T05 — cli.py
+- T06 — Final review
+
+**Decisions:** None new (no architecture changes needed).
+
+**Drift incidents:** None. Implementation stayed within acceptance criteria.
+
+**Next session:** Awaiting human approval to begin T02.
+
