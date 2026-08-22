@@ -49,18 +49,30 @@ cli.main()
 
 ### profiler.py
 - **Input:** rows (list[dict]), column_names (list[str])
-- **Output:** list of ColumnProfile objects/dicts
-- **Per-column output fields:**
-  - `name` — column name
-  - `type` — detected type: `integer`, `float`, `string`, or `mixed`
-  - `missing_count` — number of missing/empty values
-  - `missing_pct` — percentage of missing values (0–100)
-  - `unique_count` — number of distinct non-missing values
-  - For numeric columns: `min`, `max`, `mean`, `median`, `std`
+- **Output:** list[dict] — each dict is a ColumnProfile with fields: `name`, `type`, `missing_count`, `missing_pct`, `unique_count`, and for numeric columns: `min`, `max`, `mean`, `median`, `std`
 - **Responsibility:** type inference, missing-value detection, unique counting, numeric statistics
 
+**Type detection contract (deterministic rules):**
+For each column, ignore values classified as missing (empty string `""`).
+- If all non-missing values parse as integers → type is `"integer"`
+- Otherwise, if all non-missing values are numeric → type is `"float"`
+- If all non-missing values are non-numeric → type is `"string"`
+- If the column contains both numeric and non-numeric non-missing values → type is `"mixed"`
+- Boolean-looking strings ("true", "false") are classified as `"string"` — no boolean type is defined in the architecture.
+
+**Missing-value contract:**
+Only the empty string `""` is considered missing for T02. Whitespace-only values, "NA", "N/A", "null", and similar are NOT missing. Configurable missing-value semantics are not implemented in T02.
+
+**ColumnProfile output dict fields:**
+- `name` (str) — column header name
+- `type` (str) — one of: `"integer"`, `"float"`, `"string"`, `"mixed"`
+- `missing_count` (int) — count of empty-string values
+- `missing_pct` (float) — percentage of missing values (0.0–100.0)
+- `unique_count` (int) — count of distinct non-missing values
+- `min`, `max`, `mean`, `median`, `std` (float) — present only for numeric columns (`integer` or `float` type)
+
 ### quality.py
-- **Input:** list of ColumnProfile dicts
+- **Input:** list[dict] — each dict is a ColumnProfile from profiler.py
 - **Output:** QualityResult (composite_score: float 0–100, column_scores: list)
 - **Scoring logic:** weighted aggregation of per-column metrics (missing values, type consistency, completeness). Exact weighting defined in implementation.
 - **Responsibility:** score computation, score aggregation

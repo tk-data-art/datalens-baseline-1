@@ -92,3 +92,27 @@ Each session entry records:
 
 **Next session:** Awaiting human approval to begin T02.
 
+---
+
+## Session 02 — profiler.py Implementation (T02)
+
+**Date:** 2026-08-22
+**Baseline:** Baseline 1 (vanilla Claude Code)
+
+**Focus:** Implement `profiler.py` — per-column profiling module.
+
+**Completed:**
+- T02 — profiler.py (per-column profiling)
+
+**Pending:**
+- T03 — quality.py
+- T04 — report.py
+- T05 — cli.py
+- T06 — Final review
+
+**Decisions:** None new (no architecture changes needed).
+
+**Drift incidents:** None. Implementation stayed within acceptance criteria.
+
+**Next session:** Awaiting human approval to begin T03.
+

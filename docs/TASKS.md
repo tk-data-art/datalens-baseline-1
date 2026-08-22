@@ -10,17 +10,17 @@
 |---|---|---|---|---|---|---|---|
 | T00 | Project Operating System | Complete | 110 min | ~15 min | N/A | NONE | `77ad371` |
 | T01 | loader.py — CSV reading and parsing | Complete (corrective) | 35 min | ~25 min | 7/7 pass | NONE | `f28a620` + corrective |
-| T02 | profiler.py — per-column profiling | Pending | 40 min | — | — | — | — |
+| T02 | profiler.py — per-column profiling | Complete | 40 min | ~15 min | 5/5 pass | NONE | `b287baf` -> `{pending}` |
 | T03 | quality.py — composite quality score | Pending | 30 min | — | — | — | — |
 | T04 | report.py — HTML report generation | Pending | 40 min | — | — | — | — |
 | T05 | cli.py — CLI entry point | Pending | 30 min | — | — | — | — |
 | T06 | Final review and polish | Pending | 25 min | — | — | — | — |
 
-**Overall completion:** 2/7 tasks complete (28%) | Implementation started
+**Overall completion:** 3/7 tasks complete (43%) | Implementation in progress
 
-**Completed tasks:** T00, T01
+**Completed tasks:** T00, T01, T02
 
-**Current task:** None (awaiting human approval to begin T02)
+**Current task:** None (awaiting human approval to begin T03)
 
 **Remaining tasks:** T01, T02, T03, T04, T05, T06
 
@@ -108,11 +108,13 @@
 
 **Dependencies:** T01 complete
 
+**Unassigned product requirement:** "duplicate-row count" is one of the 9 product outputs but is not assigned to any task. This must be resolved before the task that owns it (likely T05 cli.py or T04 report.py). Do not implement duplicate counting in T02.
+
 **Acceptance criteria:**
-- [ ] `profiler.py` has a public function `profile(rows, column_names)` returning `list[ColumnProfile]`
+- [ ] `profiler.py` has a public function `profile(rows, column_names)` returning `list[dict]`
 - [ ] Per-column output includes: `name`, `type` (integer/float/string/mixed), `missing_count`, `missing_pct`, `unique_count`
 - [ ] Numeric columns include: `min`, `max`, `mean`, `median`, `std`
-- [ ] Correctly profiles all 5 fixture files
+- [ ] Correctly profiles all 6 fixture files
 - [ ] Handles empty columns (all missing) without crashing
 - [ ] All 5 `test_profiler.py` tests pass
 
@@ -124,6 +126,8 @@
 3. `docs/TASKS.md` updated (T02 marked complete)
 4. `docs/CHANGELOG.md` entry written
 5. Git checkpoint: `feat(T02): column profiler module`
+6. Task Completion Report produced via `docs/TASK_COMPLETION.md` template
+7. Human approval received before proceeding to T03
 
 ---
 
@@ -149,6 +153,8 @@
 3. `docs/TASKS.md` updated (T03 marked complete)
 4. `docs/CHANGELOG.md` entry written
 5. Git checkpoint: `feat(T03): quality score module`
+6. Task Completion Report produced via `docs/TASK_COMPLETION.md` template
+7. Human approval received before proceeding to T04
 
 ---
 
@@ -173,6 +179,8 @@
 3. `docs/TASKS.md` updated (T04 marked complete)
 4. `docs/CHANGELOG.md` entry written
 5. Git checkpoint: `feat(T04): HTML report generator`
+6. Task Completion Report produced via `docs/TASK_COMPLETION.md` template
+7. Human approval received before proceeding to T05
 
 ---
 
@@ -199,6 +207,8 @@
 3. `docs/TASKS.md` updated (T05 marked complete)
 4. `docs/CHANGELOG.md` entry written
 5. Git checkpoint: `feat(T05): CLI entry point`
+6. Task Completion Report produced via `docs/TASK_COMPLETION.md` template
+7. Human approval received before proceeding to T06
 
 ---
 

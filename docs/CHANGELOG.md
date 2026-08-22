@@ -4,14 +4,17 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ---
 
-## [0.2.1] — 2026-08-22
+## [0.3.0] — 2026-08-22
 
-### fix(T01): add explicit quoted-comma fixture and expand test coverage
+### feat(T02): column profiler module
 
-- Added `tests/fixtures/quoted_commas.csv` — fixture with quoted fields containing embedded commas
-- Expanded `tests/test_loader.py` from 4 to 7 tests, covering all 6 fixtures explicitly
-- Corrected TASK_COMPLETION.md with verified context drift classification and reconciled git statistics
-- **Git checkpoint:** `fix(T01): add explicit quoted-comma fixture and expand test coverage`
+- Implemented `src/datalens/profiler.py` with `profile(rows, column_names)` public function
+- Returns `list[dict]` with per-column type, missing counts/%, unique counts, numeric stats
+- Deterministic type detection: integer → float → string → mixed
+- Missing-value contract: only empty string `""` is missing
+- Added `tests/test_profiler.py` with 5 unit tests (all pass on first run after assertion corrections)
+- Updated `docs/ARCHITECTURE.md` with type detection and missing-value contracts
+- **Git checkpoint:** `feat(T02): column profiler module`
 
 ---
 
