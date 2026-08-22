@@ -71,6 +71,9 @@ Only the empty string `""` is considered missing for T02. Whitespace-only values
 - `unique_count` (int) — count of distinct non-missing values
 - `min`, `max`, `mean`, `median`, `std` (float) — present only for numeric columns (`integer` or `float` type)
 
+**Standard deviation edge case:**
+For numeric columns with fewer than two non-missing observations, `std` is `0.0`. The `statistics.stdev()` function requires at least 2 data points; with fewer, the profiler returns `0.0` rather than raising an exception.
+
 ### quality.py
 - **Input:** list[dict] — each dict is a ColumnProfile from profiler.py
 - **Output:** QualityResult (composite_score: float 0–100, column_scores: list)
