@@ -93,6 +93,36 @@ Pre-flight for T0X:
 
 ---
 
+## Task Completion Reporting Protocol
+
+After completing every implementation task (T01–T06), Claude must produce a structured **Task Completion Report** using the template in `docs/TASK_COMPLETION.md`.
+
+**The report must include:**
+1. Task summary (ID, title, status, estimated time, actual time, time variance)
+2. Objective (restated from TASKS.md)
+3. What Changed (system capability before and after, not filenames)
+4. Files Changed (created, modified, deleted, unexpected)
+5. Lines Changed (added, removed, net)
+6. Dependencies (added, removed, changes in pyproject.toml)
+7. Acceptance Criteria (pass/fail per criterion from TASKS.md)
+8. Tests (test names, results, first-run result, commands run)
+9. Architecture Impact (did module boundaries or data flow change?)
+10. Decisions Made (new ADRs if any)
+11. Context Drift (classification: NONE / MINOR / MAJOR, with incident descriptions)
+12. Git Diff Summary (files added/modified/deleted, lines added/removed, unexpected changes)
+13. Git Checkpoint (commit message and hash)
+14. Human Review Required (explicit prompt for human approval before next task)
+15. Learning Notes (what the learner should understand from this task)
+
+**Context Drift classification:**
+- **NONE** — implementation stayed within acceptance criteria, no scope additions
+- **MINOR** — small scope additions or file edits outside task scope that were corrected
+- **MAJOR** — significant scope additions or architecture changes attempted without approval
+
+**After producing the report, Claude must STOP and wait for human approval before starting the next task.** Claude must NOT automatically proceed to the next task.
+
+---
+
 ## Session Discipline
 
 - Every session begins by reading `docs/SESSION_LOG.md` to understand current state

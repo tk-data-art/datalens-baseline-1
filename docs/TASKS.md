@@ -1,10 +1,38 @@
 # DataLens — Tasks
 
+> **Completion reports:** After every completed task (T01–T06), a Task Completion Report must be produced using the template in `docs/TASK_COMPLETION.md`. Claude must STOP after producing the report and wait for human approval before starting the next task.
+
+---
+
+## Live Progress Tracker
+
+| ID | Title | Status | Est. | Actual | Tests | Context Drift | Git Commit |
+|---|---|---|---|---|---|---|---|
+| T00 | Project Operating System | Complete | 110 min | ~15 min | N/A | NONE | `77ad371` |
+| T01 | loader.py — CSV reading and parsing | Pending | 35 min | — | — | — | — |
+| T02 | profiler.py — per-column profiling | Pending | 40 min | — | — | — | — |
+| T03 | quality.py — composite quality score | Pending | 30 min | — | — | — | — |
+| T04 | report.py — HTML report generation | Pending | 40 min | — | — | — | — |
+| T05 | cli.py — CLI entry point | Pending | 30 min | — | — | — | — |
+| T06 | Final review and polish | Pending | 25 min | — | — | — | — |
+
+**Overall completion:** 1/7 tasks complete (14%) | Setup phase complete, implementation phase pending
+
+**Completed tasks:** T00
+
+**Current task:** None (awaiting human approval to begin T01)
+
+**Remaining tasks:** T01, T02, T03, T04, T05, T06
+
+**Estimated remaining time:** 200 minutes
+
+---
+
 ## Task Index
 
 | ID | Title | Est. | Status |
 |---|---|---|---|
-| T00 | Project Operating System | 110 min | Pending |
+| T00 | Project Operating System | 110 min | Complete |
 | T01 | loader.py — CSV reading and parsing | 35 min | Pending |
 | T02 | profiler.py — per-column profiling | 40 min | Pending |
 | T03 | quality.py — composite quality score | 30 min | Pending |

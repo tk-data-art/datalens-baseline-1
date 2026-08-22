@@ -4,6 +4,17 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ---
 
+## [0.1.1] — 2026-08-22
+
+### chore(T00): add task completion reporting protocol and progress tracker
+
+- Created `docs/TASK_COMPLETION.md` — standard audit template for all completed tasks (T01–T06)
+- Updated `docs/TASKS.md` — added live progress tracker with status, estimated/actual time, test results, context drift, and Git commit columns
+- Updated `CLAUDE.md` — added mandatory task completion reporting protocol requiring structured reports after every task and human approval before proceeding
+- **Git checkpoint:** `chore(T00): add task completion reporting protocol and progress tracker`
+
+---
+
 ## [0.1.0] — 2026-08-22
 
 ### chore(T00): project operating system
