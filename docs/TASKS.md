@@ -12,19 +12,19 @@
 | T01 | loader.py — CSV reading and parsing | Complete (corrective) | 35 min | ~25 min | 7/7 pass | NONE | `f28a620` + corrective |
 | T02 | profiler.py — per-column profiling | Complete | 40 min | ~15 min | 5/5 pass | NONE | `d7915a4`, `2fc77f2` |
 | T03 | quality.py — composite quality score | Complete | 30 min | ~20 min | 9/9 pass | NONE | `b23442c` |
-| T04 | report.py — HTML report generation | Complete | 40 min | — | — | — | `{pending}` |
-| T05 | cli.py — CLI entry point | Pending | 30 min | — | — | — | — |
+| T04 | report.py — HTML report generation | Complete | 40 min | ~25 min | 5/5 pass | NONE | `3149a9e` |
+| T05 | cli.py — CLI entry point | Complete | 30 min | ~20 min | 3/3 pass | NONE | `{pending}` |
 | T06 | Final review and polish | Pending | 25 min | — | — | — | — |
 
-**Overall completion:** 5/7 tasks complete (71%) | Implementation in progress
+**Overall completion:** 6/7 tasks complete (86%) | Implementation in progress
 
-**Completed tasks:** T00, T01, T02, T03, T04
+**Completed tasks:** T00, T01, T02, T03, T04, T05
 
-**Current task:** None (awaiting human approval to begin T05)
+**Current task:** None (awaiting human approval to begin T06)
 
-**Remaining tasks:** T01, T02, T03, T04, T05, T06
+**Remaining tasks:** T06
 
-**Estimated remaining time:** 200 minutes
+**Estimated remaining time:** 25 minutes
 
 ---
 
@@ -272,24 +272,65 @@ def generate(
 
 ## T05 — cli.py: CLI Entry Point
 
-**Objective:** Implement `cli.py` as the command-line entry point that orchestrates the full pipeline.
+**Objective:** Implement `cli.py` as the command-line entry point that orchestrates the full pipeline. cli.py is an orchestrator only — it calls existing modules in sequence and does not duplicate their logic.
 
 **Dependencies:** T04 complete
 
+**Architecture:** cli.py must only orchestrate: loader → profiler → quality → duplicate counting → report. It must not reimplement CSV parsing, profiling, quality scoring, or HTML rendering.
+
+**Command syntax:**
+```
+datalens <csv_path>
+```
+
+**Arguments:**
+- `csv_path` (positional, required) — path to the CSV file to analyze
+
+No options, no flags, no subcommands.
+
+**Output path:** `reports/<input filename stem>.html` (e.g., `datalens data/clean.csv` → `reports/clean.html`)
+
+**CLI stdout summary (one line):**
+```
+Report written to: reports/<stem>.html | Rows: N | Columns: N | Quality Score: X / 100
+```
+
+**Duplicate-row detection:**
+- Two rows are duplicates when they have exactly the same column/value pairs
+- Implementation: `tuple(sorted(row.items()))` — column dictionary ordering does not affect detection
+- Not supported: subset/key-based duplicates, fuzzy matching, semantic matching
+- Computed in cli.py from raw rows returned by `load_csv()`
+
+**Scalability:** DataLens processes CSV data in memory and is intended for small-to-medium CSV files that comfortably fit in memory. No artificial row/column limit is imposed.
+
+**Error handling:**
+- Missing file → print error to stderr, exit 1
+- Malformed CSV → print error to stderr, exit 1
+- Permission errors → print error to stderr, exit 1
+
+**Exit codes:**
+- `0` — success, report generated
+- `1` — failure (any error)
+
 **Acceptance criteria:**
-- [ ] `cli.py` provides `main()` callable via `python -m datalens <path>` or the `pyproject.toml` scripts entry
-- [ ] Accepts a single positional argument: path to a CSV file
-- [ ] Runs the full pipeline: load → profile → score → report
-- [ ] Prints a one-line summary to stdout (file path, rows, columns, quality score)
-- [ ] Writes the HTML report to the `reports/` directory
-- [ ] Exits with code 0 on success, non-zero on failure (missing file, parse error)
-- [ ] All 3 `test_cli.py` tests pass (2 unit + 1 integration)
+- [x] `cli.py` provides `main()` callable via `python -m datalens <path>` or the `pyproject.toml` scripts entry
+- [x] Accepts a single positional argument: path to a CSV file
+- [x] Runs the full pipeline: load → profile → score → duplicate count → report
+- [x] Prints a one-line summary to stdout: report path, row count, column count, quality score
+- [x] Writes the HTML report to `reports/<stem>.html`
+- [x] Exits with code 0 on success, non-zero on failure
+- [x] All 3 `test_cli.py` tests pass (2 unit + 1 integration)
+
+**Testing strategy:**
+- 2 unit tests call `main()` directly with controlled inputs, capturing stdout/stderr and exit codes
+- 1 integration test invokes the actual CLI entry point through `python -m datalens <csv_path>` (subprocess) to verify the real user-facing path
+- Integration test runs the full pipeline on a fixture file, asserts the report exists, stdout contains expected summary, exit code is 0
 
 **Estimated time:** 30 minutes
 
 **Definition of Done:**
 1. All acceptance criteria met
-2. `test_cli.py` passes (3 tests)
+2. `test_cli.py` passes (3 tests: 2 unit + 1 integration)
 3. `docs/TASKS.md` updated (T05 marked complete)
 4. `docs/CHANGELOG.md` entry written
 5. Git checkpoint: `feat(T05): CLI entry point`

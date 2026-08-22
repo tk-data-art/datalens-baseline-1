@@ -4,6 +4,23 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ---
 
+## [0.6.0] — 2026-08-22
+
+### feat(T05): CLI entry point
+
+- Implemented `src/datalens/cli.py` with `main()` public function as CLI entry point
+- Orchestrates full pipeline: loader → profiler → quality → duplicate count → report
+- Duplicate-row count computed via `tuple(sorted(row.items()))` — exact full-row match, column ordering independent
+- Prints one-line stdout summary: report path, row count, column count, quality score
+- Writes HTML report to `reports/<stem>.html`
+- Error handling: missing file, malformed CSV, permission errors → stderr + exit 1
+- Added `src/datalens/__main__.py` to enable `python -m datalens`
+- Added `tests/test_cli.py` with 3 tests (2 unit + 1 integration via subprocess)
+- cli.py is a pure orchestrator — no CSV parsing, profiling, scoring, or rendering reimplementation
+- **Git checkpoint:** `feat(T05): CLI entry point`
+
+---
+
 ## [0.5.0] — 2026-08-22
 
 ### feat(T04): HTML report generator

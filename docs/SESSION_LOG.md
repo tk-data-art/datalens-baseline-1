@@ -161,3 +161,24 @@ Each session entry records:
 
 **Next session:** Awaiting human approval to begin T05.
 
+---
+
+## Session 05 — cli.py Implementation (T05)
+
+**Date:** 2026-08-22
+**Baseline:** Baseline 1 (vanilla Claude Code)
+
+**Focus:** Implement `cli.py` — CLI entry point orchestrating the full pipeline. cli.py is a pure orchestrator calling existing modules in sequence: loader → profiler → quality → duplicate counting → report. Duplicate-row count computed via `tuple(sorted(row.items()))` — exact full-row match, column ordering independent. `src/datalens/__main__.py` added to enable `python -m datalens`. Integration test invokes actual CLI via subprocess. `reports/<stem>.html` output path. One-line stdout summary with report path, row count, column count, quality score.
+
+**Completed:**
+- T05 — cli.py (CLI entry point)
+
+**Pending:**
+- T06 — Final review
+
+**Decisions:** None new (no architecture changes needed).
+
+**Drift incidents:** None. Implementation stayed within acceptance criteria.
+
+**Next session:** Awaiting human approval to begin T06.
+
