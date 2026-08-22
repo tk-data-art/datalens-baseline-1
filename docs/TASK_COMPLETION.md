@@ -643,3 +643,216 @@ The implementation already returns `std=0.0` for numeric columns with fewer than
 ---
 
 *This report was generated as part of the DataLens experimental protocol. See `docs/EXPERIMENT.md` for details.*
+
+---
+
+## Task Completion Report — T03: Quality Score Module
+
+**Generated:** 2026-08-22
+**Baseline:** Baseline 1 (vanilla Claude Code)
+**Pass:** Implementation complete
+
+---
+
+### 1. Task Summary
+
+| Field | Value |
+|---|---|
+| Task ID | T03 |
+| Title | quality.py — Composite Quality Score |
+| Status | Complete |
+| Estimated Time | 30 min |
+| Actual Wall-Clock Time | ~20 min |
+| Time Variance | -10 min |
+
+---
+
+### 2. Objective
+
+Implement `quality.py` to aggregate profiler output into a composite 0–100 quality score using a weighted formula.
+
+---
+
+### 3. What Changed
+
+**Before this task:** The pipeline could load and profile CSV data but had no way to aggregate column-level metrics into an overall data-quality score. Raw column profiles were available but required manual interpretation.
+
+**After this task:** The pipeline can compute a composite quality score from column profiles. `compute_score(profiles, total_rows)` returns a plain dict with `composite_score` (float 0–100) and `column_scores` (per-column breakdown). The scoring formula uses three weighted components: completeness (50%), type consistency (30%), and distinctness (20%). All 4 fixture files can be scored and verified. All 9 tests pass.
+
+---
+
+### 4. Files Changed
+
+**Files created:**
+- `src/datalens/quality.py` — quality score module with `compute_score(profiles, total_rows)` public function
+- `tests/test_quality.py` — 9 unit tests
+
+**Files modified:**
+- None
+
+**Files deleted:**
+- None
+
+**Unexpected files modified:**
+- None
+
+---
+
+### 5. Lines Changed
+
+| Metric | Value |
+|---|---|
+| Application implementation lines added | 38 |
+| Application implementation lines removed | 0 |
+| Test lines added | 117 |
+| Test lines removed | 0 |
+| **Total lines added** | **155** |
+| **Total lines removed** | **0** |
+| **Net change** | **+155** |
+
+---
+
+### 6. Dependencies
+
+**Added:** None (stdlib only)
+**Removed:** None
+**Dependency changes in `pyproject.toml`:** None
+
+---
+
+### 7. Acceptance Criteria
+
+| Criterion | Result |
+|---|---|
+| `quality.py` has public function `compute_score(profiles, total_rows)` returning `dict` | Pass |
+| Returned dict has keys `composite_score` (float 0–100) and `column_scores` (list of dicts) | Pass |
+| Composite score is a float in range [0, 100] | Pass |
+| clean_simple.csv scores >= 90 | Pass — 96.0 |
+| Dataset with missing values scores lower than clean dataset | Pass — 81.67 < 96.0 |
+| Score computation is deterministic | Pass |
+| Edge case: empty dataset (total_rows=0) returns 0.0 | Pass |
+| All 9 `test_quality.py` tests pass | Pass — 9/9 |
+
+**Overall:** 8/8 pass
+
+---
+
+### 8. Tests
+
+| Test | Result |
+|---|---|
+| `test_clean_simple_scores_ninety_or_higher` | Pass |
+| `test_missing_values_scores_lower_than_clean` | Pass |
+| `test_mixed_types_scores_lower_than_clean` | Pass |
+| `test_edge_empty_returns_zero` | Pass |
+| `test_type_consistency_weights` | Pass |
+| `test_distinctness_calculation` | Pass |
+| `test_empty_total_rows_returns_zero` | Pass |
+| `test_deterministic_results` | Pass |
+| `test_composite_score_in_bounds` | Pass |
+
+**Test commands run:**
+```bash
+python3 -m pytest tests/test_quality.py -v
+# 9 passed in 0.02s
+
+python3 -m pytest -v
+# 21 passed in 0.01s (no regressions)
+```
+
+---
+
+### 9. Architecture Impact
+
+No architecture changes. Module follows existing patterns (single public function, plain Python dicts, no imports from other datalens modules). The API requires `total_rows` as a second parameter because profiler output does not contain row count — this is an implementation-level decision, not an architecture change. No ADR required.
+
+---
+
+### 10. Decisions Made
+
+| Decision | ADR Reference |
+|---|---|
+| Renamed "uniqueness" to "distinctness" | Not an ADR — terminology refinement |
+| Added `total_rows` parameter to API | Not an ADR — implementation-level API design |
+| Distinctness as educational baseline metric | Documented in ARCHITECTURE.md and TASKS.md |
+
+No new ADRs required.
+
+---
+
+### 11. Context Drift
+
+**Classification:** NONE
+
+| Category | Incident | Description | Severity | Resolution |
+|---|---|---|---|---|
+| Application scope drift | None | Implementation stayed within acceptance criteria | — | — |
+| Documentation changes | ARCHITECTURE.md, TASKS.md, DECISIONS.md | Pre-flight corrections (formula, API, terminology, ADR-004 fixture count) | NONE | Within approved documentation scope |
+| Repository/environment changes | None | — | — | — |
+
+---
+
+### 12. Git Diff Summary
+
+**Application implementation:**
+```
+src/datalens/quality.py | 38 +++++++++++++++++++++++++++++++++++++++
+```
+
+**Test changes:**
+```
+tests/test_quality.py | 117 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+```
+
+**Documentation changes:**
+```
+docs/ARCHITECTURE.md | +51 lines (pre-flight corrections)
+docs/TASKS.md        | +51 lines (pre-flight corrections)
+docs/DECISIONS.md    | +4/-3 (ADR-004 fixture count)
+docs/SESSION_LOG.md  | +28 lines (Session 03 entry)
+docs/CHANGELOG.md    | +24 lines (v0.4.0 entry + v0.3.1 entry)
+```
+
+| Category | Files added | Files modified | Files deleted | Lines added | Lines removed |
+|---|---|---|---|---|---|
+| Application implementation | 1 | 0 | 0 | 38 | 0 |
+| Tests | 1 | 0 | 0 | 117 | 0 |
+| Documentation | 0 | 5 | 0 | 158 | 3 |
+| Repository/environment | 0 | 0 | 0 | 0 | 0 |
+| **Total** | **2** | **5** | **0** | **313** | **3** |
+
+---
+
+### 13. Git Checkpoint
+
+**Commit message:** `feat(T03): quality score module`
+**Commit hash:** `{pending}`
+**Branch:** main
+
+---
+
+### 14. Human Review Required
+
+**Before proceeding to T04, please review:**
+
+1. The quality score formula (completeness 50%, type consistency 30%, distinctness 20%) — does it produce meaningful differentiation?
+2. The API signature `compute_score(profiles, total_rows)` — is the total_rows parameter acceptable?
+3. The `distinctness` terminology and caveat — is the educational disclaimer clear?
+4. All 9 tests pass (3 acceptance criteria tests + 6 component tests) — sufficient coverage?
+5. Any feedback before T04 (`report.py`)?
+
+**Approval to proceed:** [Pending human approval]
+
+---
+
+### 15. Learning Notes
+
+- **Pre-flight specification resolution prevented rework:** The formula, API contract, and terminology were fully resolved before implementation. Zero rework was needed during implementation.
+- **API mismatch discovered during pre-flight:** The profiler does not expose `total_rows`, so the quality module needed `total_rows` as a parameter. This was caught in pre-flight, not during implementation.
+- **Terminology matters:** Renaming "uniqueness" to "distinctness" prevents the misconception that low cardinality indicates poor data quality.
+- **9 tests cover acceptance criteria + components:** 3 tests verify acceptance criteria (clean >= 90, missing < clean, deterministic), 4 tests verify formula components (type consistency, distinctness, empty dataset, bounds), 2 tests verify edge cases (empty total_rows, deterministic re-run).
+- **All tests pass on first run:** No assertion corrections needed. Pre-flight validation eliminated expected-value errors.
+
+---
+
+*This report was generated as part of the DataLens experimental protocol. See `docs/EXPERIMENT.md` for details.*

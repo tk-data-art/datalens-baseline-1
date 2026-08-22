@@ -65,13 +65,13 @@
 
 **Context:** Need deterministic test inputs that cover the full feature surface without dynamic generation.
 
-**Decision:** Five static fixture files: `clean_simple.csv`, `missing_values.csv`, `mixed_types.csv`, `duplicates.csv`, `edge_empty.csv`.
+**Decision:** Six static fixture files: `clean_simple.csv`, `missing_values.csv`, `mixed_types.csv`, `duplicates.csv`, `edge_empty.csv`, `quoted_commas.csv`.
 
 **Consequences:**
 - Tests are reproducible and version-controlled
 - Both baselines use identical fixtures
 - No test flakiness from random data
-- Covers: baseline metrics, null handling, type edge cases, dedup, empty input
+- Covers: baseline metrics, null handling, type edge cases, dedup, empty input, quoted-comma edge case
 
 **Alternatives considered:** Dynamic fixture generation — rejected because static files are simpler, version-controlled, and both baselines can share them exactly.
 

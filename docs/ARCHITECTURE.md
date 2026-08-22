@@ -75,10 +75,49 @@ Only the empty string `""` is considered missing for T02. Whitespace-only values
 For numeric columns with fewer than two non-missing observations, `std` is `0.0`. The `statistics.stdev()` function requires at least 2 data points; with fewer, the profiler returns `0.0` rather than raising an exception.
 
 ### quality.py
-- **Input:** list[dict] — each dict is a ColumnProfile from profiler.py
-- **Output:** QualityResult (composite_score: float 0–100, column_scores: list)
-- **Scoring logic:** weighted aggregation of per-column metrics (missing values, type consistency, completeness). Exact weighting defined in implementation.
+- **Input:** `profiles` (list[dict] — ColumnProfile dicts from profiler.py), `total_rows` (int — row count from loader)
+- **Output:** dict — QualityResult with keys `composite_score` (float 0–100) and `column_scores` (list of dicts)
+- **Scoring logic:** weighted aggregation of per-column metrics. Exact formula defined below.
 - **Responsibility:** score computation, score aggregation
+
+**Quality score formula:**
+
+```
+completeness = 1 - (missing_pct / 100)
+
+type_consistency:
+    integer, float, string → 1.0
+    mixed → 0.5
+
+distinctness:
+    min(unique_count / total_rows, 1.0)
+    when total_rows > 0
+    (educational baseline metric — not a universal quality measure)
+
+column_score =
+    0.50 × completeness
+  + 0.30 × type_consistency
+  + 0.20 × distinctness
+
+composite_score =
+    mean(column_scores) × 100
+```
+
+**Boundary conditions:**
+- If `total_rows == 0`: `composite_score = 0.0`, `column_scores = []`
+- All scores are floats in range [0, 100]
+
+**QualityResult output dict structure:**
+```python
+{
+    "composite_score": float,       # 0.0–100.0
+    "column_scores": [
+        {"name": str, "score": float}  # one per column
+    ]
+}
+```
+
+**Distinctness caveat:** Distinctness is implemented as a simple distinct-value ratio (`unique_count / total_rows`) for this educational baseline. It should not be interpreted as an intrinsic quality measure for every semantic column type (e.g., a boolean column with only 2 unique values is not inherently low-quality).
 
 ### report.py
 - **Input:** QualityResult, output_path (str)
@@ -98,6 +137,12 @@ cli.py → loader.py → (stdlib csv)
 cli.py → profiler.py → (stdlib statistics)
 cli.py → quality.py → (no deps beyond profiler output)
 cli.py → report.py → jinja2
+
+Data flow:
+  load_csv(path) → (rows, column_names, row_count)
+  profile(rows, column_names) → profiles
+  compute_score(profiles, total_rows=row_count) → QualityResult
+  generate(result, output_path) → HTML file
 ```
 
 Modules communicate only through plain Python data structures. No module imports another module's internals.

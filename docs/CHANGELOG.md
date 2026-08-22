@@ -4,6 +4,31 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ---
 
+## [0.4.0] — 2026-08-22
+
+### feat(T03): quality score module
+
+- Implemented `src/datalens/quality.py` with `compute_score(profiles, total_rows)` public function
+- Returns plain dict with `composite_score` (float 0–100) and `column_scores` (list of dicts)
+- Weighted formula: completeness 50%, type consistency 30%, distinctness 20%
+- Edge case: `total_rows == 0` returns `composite_score = 0.0`
+- Added `tests/test_quality.py` with 9 unit tests (all pass)
+- Updated `docs/TASKS.md` T03 section with acceptance criteria, scoring contract, formula validation scores
+- Corrected `docs/DECISIONS.md` ADR-004 fixture count: five → six
+- **Git checkpoint:** `feat(T03): quality score module`
+
+---
+
+## [0.3.1] — 2026-08-22
+
+### docs(T02): add std=0.0 edge-case contract to ARCHITECTURE.md
+
+- Documented std=0.0 behavior for numeric columns with fewer than two non-missing observations
+- Verification pass: no code changes required; profiler.py confirmed correct
+- **Git checkpoint:** `docs(T02): add std=0.0 edge-case contract to ARCHITECTURE.md`
+
+---
+
 ## [0.3.0] — 2026-08-22
 
 ### feat(T02): column profiler module
@@ -15,6 +40,17 @@ All changes are recorded with their git commit hash after each checkpoint.
 - Added `tests/test_profiler.py` with 5 unit tests (all pass on first run after assertion corrections)
 - Updated `docs/ARCHITECTURE.md` with type detection and missing-value contracts
 - **Git checkpoint:** `feat(T02): column profiler module`
+
+---
+
+## [0.2.1] — 2026-08-22
+
+### fix(T01): add explicit quoted-comma fixture and expand test coverage
+
+- Added `tests/fixtures/quoted_commas.csv` with embedded commas in quoted fields
+- Expanded `tests/test_loader.py` from 4 to 7 tests covering all 6 fixtures
+- Corrective pass: all 7 tests pass on first run
+- **Git checkpoint:** `fix(T01): add explicit quoted-comma fixture and expand test coverage`
 
 ---
 
@@ -49,3 +85,4 @@ All changes are recorded with their git commit hash after each checkpoint.
 - Wrote `README.md` — project description, install, run instructions
 - Created 5 test fixture CSV files in `tests/fixtures/`
 - **Git checkpoint:** `chore(T00): project operating system`
+

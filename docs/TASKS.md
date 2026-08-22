@@ -10,17 +10,17 @@
 |---|---|---|---|---|---|---|---|
 | T00 | Project Operating System | Complete | 110 min | ~15 min | N/A | NONE | `77ad371` |
 | T01 | loader.py — CSV reading and parsing | Complete (corrective) | 35 min | ~25 min | 7/7 pass | NONE | `f28a620` + corrective |
-| T02 | profiler.py — per-column profiling | Complete | 40 min | ~15 min | 5/5 pass | NONE | `b287baf` -> `{pending}` |
-| T03 | quality.py — composite quality score | Pending | 30 min | — | — | — | — |
+| T02 | profiler.py — per-column profiling | Complete | 40 min | ~15 min | 5/5 pass | NONE | `d7915a4`, `2fc77f2` |
+| T03 | quality.py — composite quality score | Complete | 30 min | — | — | — | `{pending}` |
 | T04 | report.py — HTML report generation | Pending | 40 min | — | — | — | — |
 | T05 | cli.py — CLI entry point | Pending | 30 min | — | — | — | — |
 | T06 | Final review and polish | Pending | 25 min | — | — | — | — |
 
-**Overall completion:** 3/7 tasks complete (43%) | Implementation in progress
+**Overall completion:** 4/7 tasks complete (57%) | Implementation in progress
 
-**Completed tasks:** T00, T01, T02
+**Completed tasks:** T00, T01, T02, T03
 
-**Current task:** None (awaiting human approval to begin T03)
+**Current task:** None (awaiting human approval to begin T04)
 
 **Remaining tasks:** T01, T02, T03, T04, T05, T06
 
@@ -137,19 +137,66 @@
 
 **Dependencies:** T02 complete
 
+**Scoring contract:**
+
+```
+completeness = 1 - (missing_pct / 100)
+
+type_consistency:
+    integer, float, string → 1.0
+    mixed → 0.5
+
+distinctness:
+    min(unique_count / total_rows, 1.0)
+    when total_rows > 0
+    (educational baseline metric — not a universal quality measure)
+
+column_score =
+    0.50 × completeness
+  + 0.30 × type_consistency
+  + 0.20 × distinctness
+
+composite_score =
+    mean(column_scores) × 100
+```
+
+**Boundary conditions:**
+- If `total_rows == 0`: `composite_score = 0.0`, `column_scores = []`
+- All scores are floats in range [0, 100]
+
+**Result structure (plain dict, no class):**
+```python
+{
+    "composite_score": float,
+    "column_scores": [
+        {"name": str, "score": float}
+    ]
+}
+```
+
+**Formula validation (pre-computed expected scores):**
+- clean_simple.csv (5 rows): composite_score = 96.0
+- missing_values.csv (6 rows): composite_score = 81.6667
+- mixed_types.csv (6 rows): composite_score = 89.0
+- edge_empty.csv (0 rows): composite_score = 0.0
+
+**API:** `compute_score(profiles: list[dict], total_rows: int) -> dict`
+
 **Acceptance criteria:**
-- [ ] `quality.py` has a public function `compute_score(profiles)` returning `QualityResult`
-- [ ] Composite score is a float in range [0, 100]
-- [ ] A completely clean dataset (clean_simple.csv) scores >= 90
-- [ ] A dataset with significant missing values scores lower than a clean dataset
-- [ ] Score computation is deterministic (same input → same output)
-- [ ] All 3 `test_quality.py` tests pass
+- [x] `quality.py` has a public function `compute_score(profiles, total_rows)` returning `dict`
+- [x] Returned dict has keys `composite_score` (float 0–100) and `column_scores` (list of dicts with `name` and `score`)
+- [x] Composite score is a float in range [0, 100]
+- [x] A completely clean dataset (clean_simple.csv) scores >= 90
+- [x] A dataset containing missing values scores lower than an otherwise equivalent complete dataset
+- [x] Score computation is deterministic (same input → same output)
+- [x] Edge case: empty dataset (total_rows=0) returns composite_score=0.0
+- [x] All 9 `test_quality.py` tests pass
 
 **Estimated time:** 30 minutes
 
 **Definition of Done:**
 1. All acceptance criteria met
-2. `test_quality.py` passes (3 tests)
+2. `test_quality.py` passes (9 tests)
 3. `docs/TASKS.md` updated (T03 marked complete)
 4. `docs/CHANGELOG.md` entry written
 5. Git checkpoint: `feat(T03): quality score module`

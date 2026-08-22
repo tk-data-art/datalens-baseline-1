@@ -116,3 +116,26 @@ Each session entry records:
 
 **Next session:** Awaiting human approval to begin T03.
 
+---
+
+## Session 03 — quality.py Implementation (T03)
+
+**Date:** 2026-08-22
+**Baseline:** Baseline 1 (vanilla Claude Code)
+
+**Focus:** Implement `quality.py` — composite quality score module. Pre-flight resolved specification gaps (formula, API contract, terminology, empty dataset behavior) before implementation. Scoring formula locked with weights 0.50/0.30/0.20 (completeness/type consistency/distinctness). API expanded from `compute_score(profiles)` to `compute_score(profiles, total_rows)` to supply distinctness denominator. `uniqueness` renamed to `distinctness` to reflect its nature as a data-distribution ratio, not a universal quality measure.
+
+**Completed:**
+- T03 — quality.py (composite quality score)
+
+**Pending:**
+- T04 — report.py
+- T05 — cli.py
+- T06 — Final review
+
+**Decisions:** None new (no architecture changes needed).
+
+**Drift incidents:** None. Implementation stayed within acceptance criteria.
+
+**Next session:** Awaiting human approval to begin T04.
+
