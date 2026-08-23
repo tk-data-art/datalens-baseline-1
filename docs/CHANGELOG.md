@@ -4,6 +4,25 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ---
 
+## [0.7.0] — 2026-08-22
+
+### chore(T06): final review and polish
+
+- Full functional validation: 29/29 tests pass, no regressions
+- Architecture audit: 6 modules, each with one public function, no circular imports, no reimplementation
+- Documentation consistency audit: all files updated, fixture count corrected (5→6)
+- Git/GitHub audit: linear history, 9 commits, no merges, no sensitive data
+- `pip install -e .` verified
+- Created `benchmarks/benchmark_generator.py` with deterministic seed=42
+- Generated 4 benchmark datasets (gitignored, not committed)
+- Ran 4 scalability benchmarks: all completed successfully
+- Wrote `docs/EXPERIMENT_RESULTS.md` with Baseline 1 metrics
+- Updated README.md with example run
+- Updated SESSION_LOG.md, CHANGELOG.md, TASKS.md
+- **Git checkpoint:** `chore(T06): final review and polish`
+
+---
+
 ## [0.6.0] — 2026-08-22
 
 ### feat(T05): CLI entry point

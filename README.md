@@ -39,6 +39,20 @@ The HTML report is written to the `reports/` directory.
 
 ## Project status
 
-This project is a Claude Code learning experiment (Baseline 1). Application source code has not yet been implemented.
+This project is a Claude Code learning experiment (Baseline 1 — vanilla Claude Code, no plugins). All application source code and tests are complete.
 
 See `docs/EXPERIMENT.md` for experiment details.
+
+## Example
+
+```bash
+datalens tests/fixtures/clean_simple.csv
+```
+
+Output:
+
+```
+Report written to: reports/clean_simple.html | Rows: 5 | Columns: 5 | Quality Score: 96.0 / 100
+```
+
+The HTML report is written to the `reports/` directory.
