@@ -51,7 +51,7 @@
 | T03 | quality.py — composite quality score | 30 min | ~20 min | 9/9 | NONE | 0 |
 | T04 | report.py — HTML report generation | 40 min | ~25 min | 5/5 | NONE | 0 |
 | T05 | cli.py — CLI entry point | 30 min | ~20 min | 3/3 | NONE | 0 |
-| T06 | Final review and polish | 130 min | — | — | — | — |
+| T06 | Final review and polish | 130 min | ~90 min | 29/29 | NONE | 0 |
 
 **Total time (T00–T05):** ~120 minutes
 
@@ -144,7 +144,7 @@
 | CPU Architecture | arm64 |
 | macOS Version | 26.5.2 |
 | Python Version | 3.13.14 (Clang 21.0.0) |
-| Git Commit | `5cd9954` — `feat(T05): CLI entry point` |
+| Git Commit | `0fae8ce` — `chore(T06): final review and polish` |
 | Benchmark Date | 2026-08-22 |
 | Benchmark Seed | 42 (deterministic) |
 | Measurement Tool | `/usr/bin/time -l` (macOS) |
@@ -155,7 +155,7 @@
 
 To reproduce these benchmarks:
 
-1. Clone the repository at commit `5cd9954`
+1. Clone the repository at commit `0fae8ce`
 2. Run `python3 -m pip install -e .`
 3. Run `python3 benchmarks/benchmark_generator.py <rows> <cols> benchmarks/data/benchmark_<rows>k_<cols>.csv`
 4. Run `PYTHONPATH=src /usr/bin/time -l python3 -m datalens benchmarks/data/benchmark_<rows>k_<cols>.csv`

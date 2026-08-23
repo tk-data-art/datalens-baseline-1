@@ -25,7 +25,7 @@ These must be identical across both baselines:
 | Starting repository state | Both start from empty repo with equivalent T00 commit |
 | Requirements document | Identical `docs/TASKS.md` content |
 | Acceptance criteria | Identical per task |
-| Sample data | Identical 5 fixture CSV files |
+| Sample data | Identical 6 fixture CSV files |
 | Definition of Done | Identical per task and global |
 | Task sequence | Identical order: T00 → T01 → T02 → T03 → T04 → T05 → T06 |
 | Model version | Both use Claude Sonnet 5 |

@@ -13,10 +13,10 @@
 | T02 | profiler.py — per-column profiling | Complete | 40 min | ~15 min | 5/5 pass | NONE | `d7915a4`, `2fc77f2` |
 | T03 | quality.py — composite quality score | Complete | 30 min | ~20 min | 9/9 pass | NONE | `b23442c` |
 | T04 | report.py — HTML report generation | Complete | 40 min | ~25 min | 5/5 pass | NONE | `3149a9e` |
-| T05 | cli.py — CLI entry point | Complete | 30 min | ~20 min | 3/3 pass | NONE | `{pending}` |
-| T06 | Final review and polish | Complete | 130 min | ~90 min | 29/29 pass | NONE | — |
+| T05 | cli.py — CLI entry point | Complete | 30 min | ~20 min | 3/3 pass | NONE | `5cd9954` |
+| T06 | Final review and polish | Complete | 130 min | ~90 min | 29/29 pass | NONE | `0fae8ce` |
 
-**Overall completion:** 7/7 tasks complete (100%) | T06 complete
+**Overall completion:** All 7 project tasks complete (T00, T00a, T01–T06)
 
 **Completed tasks:** T00, T01, T02, T03, T04, T05, T06
 
