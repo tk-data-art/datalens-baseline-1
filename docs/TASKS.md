@@ -14,7 +14,7 @@
 | T03 | quality.py — composite quality score | Complete | 30 min | ~20 min | 9/9 pass | NONE | `b23442c` |
 | T04 | report.py — HTML report generation | Complete | 40 min | ~25 min | 5/5 pass | NONE | `3149a9e` |
 | T05 | cli.py — CLI entry point | Complete | 30 min | ~20 min | 3/3 pass | NONE | `5cd9954` |
-| T06 | Final review and polish | Complete | 130 min | ~90 min | 29/29 pass | NONE | `0fae8ce` |
+| T06 | Final review and polish | Complete | 130 min | ~90 min | 33/33 pass | NONE | `0fae8ce` |
 
 **Overall completion:** All 7 project tasks complete (T00, T00a, T01–T06)
 
@@ -33,12 +33,12 @@
 | ID | Title | Est. | Status |
 |---|---|---|---|
 | T00 | Project Operating System | 110 min | Complete |
-| T01 | loader.py — CSV reading and parsing | 35 min | Pending |
-| T02 | profiler.py — per-column profiling | 40 min | Pending |
-| T03 | quality.py — composite quality score | 30 min | Pending |
-| T04 | report.py — HTML report generation | 40 min | Pending |
-| T05 | cli.py — CLI entry point | 30 min | Pending |
-| T06 | Final review and polish | 25 min | Pending |
+| T01 | loader.py — CSV reading and parsing | 35 min | Complete (corrective) |
+| T02 | profiler.py — per-column profiling | 40 min | Complete (corrective) |
+| T03 | quality.py — composite quality score | 30 min | Complete |
+| T04 | report.py — HTML report generation | 40 min | Complete |
+| T05 | cli.py — CLI entry point | 30 min | Complete |
+| T06 | Final review and polish | 130 min | Complete |
 
 ---
 
@@ -82,13 +82,15 @@
 **Dependencies:** T00 complete
 
 **Acceptance criteria:**
-- [ ] `loader.py` has a public function `load_csv(path: str)` that returns `(rows, column_names, row_count)`
-- [ ] Returns `rows` as `list[dict]`, `column_names` as `list[str]`, `row_count` as `int`
-- [ ] Correctly parses all 5 fixture files without error
-- [ ] Handles quoted fields with embedded commas
-- [ ] Handles empty CSV (header only, 0 data rows) without crashing
-- [ ] Raises a clear error for a file that does not exist
-- [ ] All 4 `test_loader.py` tests pass
+- [x] `loader.py` has a public function `load_csv(path: str)` that returns `(rows, column_names, row_count)`
+- [x] Returns `rows` as `list[dict]`, `column_names` as `list[str]`, `row_count` as `int`
+- [x] Correctly parses all 6 fixture files without error
+- [x] Handles quoted fields with embedded commas
+- [x] Handles empty CSV (header only, 0 data rows) without crashing
+- [x] Raises a clear error for a file that does not exist
+- [x] All `test_loader.py` tests pass (7 after corrective pass)
+
+**Test coverage note:** Acceptance criteria define behavior, not a fixed test count. Baseline 1 provides 7 tests covering all 6 fixtures plus the missing-file case. The "4 tests" wording in the original specification is a historical artifact.
 
 **Estimated time:** 35 minutes
 
@@ -111,18 +113,20 @@
 **Unassigned product requirement:** "duplicate-row count" is one of the 9 product outputs but is not assigned to any task. This must be resolved before the task that owns it (likely T05 cli.py or T04 report.py). Do not implement duplicate counting in T02.
 
 **Acceptance criteria:**
-- [ ] `profiler.py` has a public function `profile(rows, column_names)` returning `list[dict]`
-- [ ] Per-column output includes: `name`, `type` (integer/float/string/mixed), `missing_count`, `missing_pct`, `unique_count`
-- [ ] Numeric columns include: `min`, `max`, `mean`, `median`, `std`
-- [ ] Correctly profiles all 6 fixture files
-- [ ] Handles empty columns (all missing) without crashing
-- [ ] All 5 `test_profiler.py` tests pass
+- [x] `profiler.py` has a public function `profile(rows, column_names)` returning `list[dict]`
+- [x] Per-column output includes: `name`, `type` (integer/float/string/mixed), `missing_count`, `missing_pct`, `unique_count`
+- [x] Numeric columns include: `min`, `max`, `mean`, `median`, `std`
+- [x] Correctly profiles all 6 fixture files
+- [x] Handles empty columns (all missing) without crashing
+- [x] All 9 `test_profiler.py` tests pass (after corrective pass)
+
+**Test coverage note:** Baseline 1 provides 9 tests covering all 6 fixtures, all-missing column, and std edge cases. The "5 tests" wording is historical.
 
 **Estimated time:** 40 minutes
 
 **Definition of Done:**
 1. All acceptance criteria met
-2. `test_profiler.py` passes (5 tests)
+2. `test_profiler.py` passes (9 tests after corrective pass)
 3. `docs/TASKS.md` updated (T02 marked complete)
 4. `docs/CHANGELOG.md` entry written
 5. Git checkpoint: `feat(T02): column profiler module`
@@ -366,7 +370,7 @@ Report written to: reports/<stem>.html | Rows: N | Columns: N | Quality Score: X
 - Sections for Baseline 2 and comparative analysis reserved but not populated
 
 **Acceptance criteria:**
-- [x] Full `pytest` suite passes (29/29)
+- [x] Full `pytest` suite passes (33/33)
 - [x] README.md contains realistic example run with fixture output
 - [x] docs/CHANGELOG.md has entries for all completed tasks (T00–T05)
 - [x] docs/SESSION_LOG.md has final entry

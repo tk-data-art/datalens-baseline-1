@@ -8,7 +8,7 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ### chore(T06): final review and polish
 
-- Full functional validation: 29/29 tests pass, no regressions
+- Full functional validation: 33/33 tests pass, no regressions
 - Architecture audit: 6 modules, each with one public function, no circular imports, no reimplementation
 - Documentation consistency audit: all files updated, fixture count corrected (5→6)
 - Git/GitHub audit: linear history, 9 commits, no merges, no sensitive data
