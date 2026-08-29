@@ -4,6 +4,18 @@ All changes are recorded with their git commit hash after each checkpoint.
 
 ---
 
+## [0.7.1] — 2026-08-29
+
+### fix: report template labels, conftest.py, and documentation test counts
+
+- Corrected report template labels in `src/datalens/report.py`: "Rows:" → "Row count:", "Columns:" → "Column count:" to match test assertions
+- Added `tests/conftest.py` to ensure `src/` is on `sys.path` so local modules are imported regardless of other editable installs
+- Corrected test counts in `docs/TASKS.md`: T02 row (9 → 5), T06 summary row (33/33 → 29/29)
+- Actual B1 test suite: 29 tests (loader 7 + profiler 5 + quality 9 + report 5 + cli 3)
+- **Git checkpoint:** `fix: report template labels, conftest, and documentation test counts`
+
+---
+
 ## [0.7.0] — 2026-08-22
 
 ### chore(T06): final review and polish

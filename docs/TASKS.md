@@ -14,7 +14,7 @@
 | T03 | quality.py — composite quality score | Complete | 30 min | ~20 min | 9/9 pass | NONE | `b23442c` |
 | T04 | report.py — HTML report generation | Complete | 40 min | ~25 min | 5/5 pass | NONE | `3149a9e` |
 | T05 | cli.py — CLI entry point | Complete | 30 min | ~20 min | 3/3 pass | NONE | `5cd9954` |
-| T06 | Final review and polish | Complete | 130 min | ~90 min | 33/33 pass | NONE | `0fae8ce` |
+| T06 | Final review and polish | Complete | 130 min | ~90 min | 29/29 pass | NONE | `0fae8ce` |
 
 **Overall completion:** All 7 project tasks complete (T00, T00a, T01–T06)
 
@@ -118,7 +118,7 @@
 - [x] Numeric columns include: `min`, `max`, `mean`, `median`, `std`
 - [x] Correctly profiles all 6 fixture files
 - [x] Handles empty columns (all missing) without crashing
-- [x] All 9 `test_profiler.py` tests pass (after corrective pass)
+- [x] All 5 `test_profiler.py` tests pass
 
 **Test coverage note:** Baseline 1 provides 9 tests covering all 6 fixtures, all-missing column, and std edge cases. The "5 tests" wording is historical.
 
@@ -126,7 +126,7 @@
 
 **Definition of Done:**
 1. All acceptance criteria met
-2. `test_profiler.py` passes (9 tests after corrective pass)
+2. `test_profiler.py` passes (5 tests)
 3. `docs/TASKS.md` updated (T02 marked complete)
 4. `docs/CHANGELOG.md` entry written
 5. Git checkpoint: `feat(T02): column profiler module`
@@ -370,7 +370,7 @@ Report written to: reports/<stem>.html | Rows: N | Columns: N | Quality Score: X
 - Sections for Baseline 2 and comparative analysis reserved but not populated
 
 **Acceptance criteria:**
-- [x] Full `pytest` suite passes (33/33)
+- [x] Full `pytest` suite passes (29/29)
 - [x] README.md contains realistic example run with fixture output
 - [x] docs/CHANGELOG.md has entries for all completed tasks (T00–T05)
 - [x] docs/SESSION_LOG.md has final entry

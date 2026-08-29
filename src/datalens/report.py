@@ -29,14 +29,10 @@ _TEMPLATE = """\
 <body>
     <h1>DataLens — Data Quality Report</h1>
 
-    <div class="section">
-        <h2>Overview</h2>
-        <table>
-            <tr><th>Row count</th><td>{{ row_count }}</td></tr>
-            <tr><th>Column count</th><td>{{ col_count }}</td></tr>
-            <tr><th>Duplicate rows</th><td>{{ duplicate_row_count }}</td></tr>
-        </table>
-    </div>
+    <h2>Summary</h2>
+    <p>Row count: {{ row_count }}</p>
+    <p>Column count: {{ col_count }}</p>
+    <p>Duplicate rows: {{ duplicate_row_count }}</p>
 
     <div class="section">
         <h2>Quality Score</h2>
